@@ -1,0 +1,121 @@
+@media (min-width:1200px){
+	.container {
+		max-width:1600px;
+	}
+}
+h1 {
+	font-size:2.2rem;
+}
+h2 {
+	font-size:1.8rem;
+}
+h1, h2 {
+	font-weight: normal;
+	text-align: center;
+}
+.col-sm-12 {
+	margin-bottom: 1.5em;
+}
+body {
+	background-color: #333333;
+}
+.container {
+    margin-top:1em;
+	margin-bottom:1em;
+}
+th.episodeHeader {
+	height: 140px;
+	white-space: nowrap;
+	width:10px;
+	vertical-align:middle;
+	text-align: center;
+}
+
+th.episodeHeader > div {
+	transform: 
+		rotate(270deg);
+		width: 30px;
+}	
+th.seasonHeader {
+	text-align: center;
+}
+th {
+	border:0px !important;
+}
+tbody>tr>th {
+	width:3em;
+}
+.rating10 {
+	background-color: #63be7e;
+	color: #333333;
+}
+.rating9 {
+	background-color: #63be7e;
+	color: #333333;
+}
+.rating8 {
+	background-color: #b1d580;
+	color: #333333;
+}
+.rating7 {
+	background-color: #ffeb84;
+	color: #333333;
+}
+.rating6 {
+	background-color: #fbaa77;
+	color: #333333;
+}
+.rating5 {
+	background-color: #f8696b;
+	color: #333333;
+}
+.rating4,.rating3,.rating2,.rating1,.rating0 {
+	background-color: #ff5555;
+	color: #333333;
+}
+div#graph {
+	text-align: center;
+}
+.dropdown-menu {
+	height:auto;
+	max-height:300px;
+	overflow-x:hidden;
+	background-color: #343a40;
+	padding:.5em;
+	border:1px solid #cccccc;
+}
+input#searchInput {
+	margin-bottom:1em;
+}
+ul#searchMenu > li > a:link,ul#searchMenu > li > a:visited {
+	color:#cccccc;
+	width:100%;
+}
+div.ad {
+	text-align:right;
+	display: none;
+}
+div#showAllRankingsButton[aria-expanded="true"] {
+	display:none !important;
+}
+.btn-link, .btn-link:hover, .btn-link:visited {
+	color:#eeeeee;
+}
+.sortButton  {
+	color:#ffeb84;
+}
+table#episodeList tbody tr.hidden {
+	display:none;
+}
+table#episodeList tbody tr.more {
+	text-align:center;
+}
+table#GenreRankingTable tbody tr {
+	cursor: pointer;
+}
+#SeriesDescription {
+	border:1px solid #cccccc;
+}
+.detailsProperty {
+	font-weight: bold;
+}

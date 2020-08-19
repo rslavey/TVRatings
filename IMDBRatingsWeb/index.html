@@ -1,0 +1,188 @@
+<!doctype html>
+
+<html lang='en'>
+
+<head>
+    <meta charset='utf-8'>
+    <title>TV Series Rating Visualization</title>
+    <meta name='description' content='TV Series Rating Visualization'>
+    <meta name='keywords' content='tv ratings'>
+    <meta name='author' content='Randy Slavey'>
+    <meta name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no'>
+    <meta property='og:image' content='/thumbnail.png' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
+        integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+    <link rel='stylesheet' href='style.min.css'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'
+        integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo'
+        crossorigin='anonymous'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'
+        integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6'
+        crossorigin='anonymous'></script>
+    <script src='./script.min.js'></script>
+</head>
+
+<body class='bg-dark text-light'>
+    <div class='container'>
+        <div class='row d-none bg-secondary text-white py-1 fixed-bottom' id='cookieNotice' tabindex='-1'>
+            <div class='col d-flex justify-content-center align-items-center'>
+                <div class='px-5 cookie-text'>This website uses cookies to personalize content and analyse
+                    traffic in order to offer you a better experience.</div>
+                <div class='buttons d-flex flex-column flex-lg-row'>
+                    <div id='acceptCookieButton' class='text-nowrap btn btn-success btn-sm'>I accept</div>
+                </div>
+            </div>
+        </div>
+        <div class='row pb-5 d-flex justify-content-center' id='searchRow'>
+            <div class='col'>
+                <div id='searchDropdown' class='dropdown keep-open-on-click'>
+                    <button id='showSearch' class='btn btn-secondary dropdown-toggle' type='button'
+                        data-toggle='dropdown'>
+                        Search
+                        <span class='caret'></span>
+                    </button>
+                    <ul id='searchMenu' class='dropdown-menu'>
+                        <div class='row pb-2'>
+                            <div class='col d-flex'>
+                                <button data-rating='0' data-toggle='tooltip' data-placement='top' title='Show All'
+                                    id='star1' class='starRating flex-fill rating5 btn btn-sm'>&#9733;</button>
+                                <button data-rating='6' data-toggle='tooltip' data-placement='top' title='Rating 6+'
+                                    id='star2' class='starRating flex-fill rating6 btn btn-sm'>&#9734;</button>
+                                <button data-rating='7' data-toggle='tooltip' data-placement='top' title='Rating 7+'
+                                    id='star3' class='starRating flex-fill rating7 btn btn-sm'>&#9734;</button>
+                                <button data-rating='8' data-toggle='tooltip' data-placement='top' title='Rating 8+'
+                                    id='star4' class='starRating flex-fill rating8 btn btn-sm'>&#9734;</button>
+                                <button data-rating='9' data-toggle='tooltip' data-placement='top' title='Rating 9+'
+                                    id='star5' class='starRating flex-fill rating9 btn btn-sm'>&#9734;</button>
+                            </div>
+                        </div>
+                        <div class='row pb-2'>
+                            <div class='col''>
+                                <button data-toggle=' tooltip' data-placement='top' title='Sort A-Z' id='btnSortAlpha'
+                                class='float-right sortButton btn btn-link'>&#9398;</button>
+                                <button data-toggle='tooltip' data-placement='top' title='Sort Most Rated'
+                                    id='btnSortVotes'
+                                    class='float-right sortButton btn btn-link'><span>&#10026;</span></button>
+                            </div>
+                        </div>
+                        <input class='form-control' id='searchInput' type='text' placeholder='Search..'>
+                    </ul>
+                </div>
+            </div>
+            <div class='col'>
+                <a class='btn btn-secondary float-right' href='/random' role='button'>Random</a>
+            </div>
+        </div>
+        <div class='row title'>
+            <div class='col col-sm-12'>
+                <h1 id='SeriesTitle'></h1>
+                <div class='d-flex justify-content-center'>
+                    <button id='showSeriesDetails' type='button' class='text-center btn btn-link' data-toggle="collapse"
+                        data-target="#SeriesDetails" aria-expanded="false" aria-controls="SeriesDetails">Show Series
+                        Description</button>
+                    <a id='viewOnImdb' type='button' class='text-center btn btn-link' target="_blank" href='https://www.imdb.com/'>View on IMDb</a>
+                </div>
+                <div class='collapse py-1 row justify-content-md-center' id='SeriesDetails'>
+                    <div class='col-sm-12 col-md-6 text-center'>
+                        <img id='MoviePoster' class='p-2 pr-4 pb-4 float-md-left' onerror='$(this).hide();' />
+                        <div class='col text-left'>
+                            <p id='SeriesPlot' class='p-2'></p>
+                            <p id='SeriesActors' class='p-2'></p>
+                            <p id='SeriesAwards' class='p-2'></p>
+                        </div>
+                    </div>
+                </div>
+                <div id='GenreRanks' class='text-center'>
+                </div>
+            </div>
+        </div>
+        <div class='row mx-sm-n5'>
+            <div id='chartColumn' class='px-sm-5 col'>
+                <div class='row'>
+                    <div class='col'>
+                        <span>
+                            <div class='table-responsive'>
+                                <table id='ratings' class='table table-dark table-sm'>
+                                    <thead>
+                                        <tr>
+                                            <th class='seasonHeader' colspan='0'>Season</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class='episodeHeader' rowspan='0'>
+                                                <div><span>Episode</span></div>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                </table>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id='bestColumn' class='px-sm-5 col'>
+                <div class='row'>
+                    <div class='col'>
+                        <div class='row'>
+                            <div class='col d-flex justify-content-center'>
+                                <canvas id='episodeQuality'></canvas>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col d-flex justify-content-center'>
+                                <h2>Rating</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col'>
+                        <div class='row'>
+                            <div class='col d-flex justify-content-center'>
+                                <canvas id='episodeRuntime'></canvas>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col d-flex justify-content-center'>
+                                <h2>Watch Time</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id='epsRanked' class='mt-5 row'>
+                    <div class='col-sm-12'>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='row mt-5'>
+            <div id='graph' class='d-flex col-sm-12'>
+                <div class='row'>
+                    <div class='col-sm-12'>
+                        <canvas id='seasonGraph'></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='amazonBeg' class='row mt-5'>
+            <div class='col d-flex justify-content-center'>
+                <div id='amzn-assoc-ad-04429133-acb8-4580-92c1-e86add798290'></div><script async src='//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=04429133-acb8-4580-92c1-e86add798290'></script>
+            </div>
+        </div>
+        <div id='beg' class='row mt-5'>
+            <div class='col d-flex justify-content-center'>
+                <div class='card bg-dark text-white'>
+                    <div class='card-body'>
+                        If you want to show your support, you can <a href='https://ko-fi.com/randyslavey'>buy me a
+                            Ko-fi</a> or <a
+                            href='https://www.extra-life.org/index.cfm?fuseaction=donordrive.participant&participantID=401475'>Donate
+                            to Children's Hospital Colorado</a>. Cheers!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
